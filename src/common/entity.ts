@@ -2,9 +2,11 @@ import { NonFunctionProperties } from '../utils';
 
 export abstract class Entity<E extends Entity<E>> {
   public constructor(input: NonFunctionProperties<E>) {
-    type PropertyValue = this[Extract<keyof this, string>];
-    for (const property of Object.getOwnPropertyNames(input)) {
-      this[property as keyof this] = input[property as keyof NonFunctionProperties<E>] as unknown as PropertyValue;
+    if (input) {
+      type PropertyValue = this[Extract<keyof this, string>];
+      for (const property of Object.getOwnPropertyNames(input)) {
+        this[property as keyof this] = input[property as keyof NonFunctionProperties<E>] as unknown as PropertyValue;
+      }
     }
   }
 
