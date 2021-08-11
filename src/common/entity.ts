@@ -12,9 +12,10 @@ export abstract class Entity<E extends Entity<E>> {
 
   protected abstract construct(input: NonFunctionProperties<Entity<E>>): E;
 
-  public with<P extends keyof E>(property: P, value: E[P]): E {
-    const newEntity = this.construct(this);
-    newEntity[property] = value;
-    return newEntity;
+  public with(input: Partial<this>): E {
+    return this.construct({
+      ...this,
+      ...input
+    });
   }
 }
